@@ -34,11 +34,7 @@
                     <th scope="col">Options</th>
                 </tr>
             </thead>
-            <tbody>
-                <% _.each(items.models, function(item, id, items){ %>
-                    <%= renderObject({item: item, id: id, isEditable: isEditable}) %>
-                <% }); %>
-            </tbody>
+            <tbody></tbody>
         </table>
     </script>
     <script type="text/template" id="view-object">

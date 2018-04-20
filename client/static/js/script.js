@@ -23,6 +23,20 @@ var Item = Backbone.Model.extend({
     urlRoot: '/model'
 });
 
+// Each Objects View
+
+var ObjectView = Backbone.View.extend({
+    initialize: function(options){
+      var templateFile = options.isEditable ? $('#edit-object').html() : $('#view-object').html()
+      this.id = options.id
+      this.template = _.template(templateFile)
+      this.listenTo(this.model, 'change', this.render);
+    },
+    render: function(){
+      return this.template({item: this.model, id: this.id});
+    }
+});
+
 // Main Item View
 
 var ItemView = Backbone.View.extend({
@@ -33,7 +47,11 @@ var ItemView = Backbone.View.extend({
         getItems.fetch({
             success: function(collection){
                 var template = _.template($('#all-items').html());
-                that.$el.html(template({items: collection, isEditable: false}));
+                that.$el.html(template());
+                _.each(collection.models, function(item, id, items){
+                    var childObject = new ObjectView({model: item, id: id, isEditable: false})
+                    that.$el.find('tbody').append(childObject.render())
+                });
             }
         })
     }
