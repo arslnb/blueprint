@@ -4,12 +4,6 @@ function htmlEncode(value){
     return $('<div/>').text(value).html();
 }
 
-function renderObject(data){
-    var getTemplate = data.isEditable ? $('#edit-object').html() : $('#view-object').html()
-    var template = _.template(getTemplate);
-    return template({item: data.item, id: data.id});
-}
-
 // Models and collections
 
 var Items = Backbone.Collection.extend({
@@ -26,14 +20,27 @@ var Item = Backbone.Model.extend({
 // Each Objects View
 
 var ObjectView = Backbone.View.extend({
+    tagName: 'tr',
+    events: {
+        'click .edit-row': 'goToEdit',
+        'click .del-row': 'delRow',
+        'click .save-row': 'saveRow'
+    },
     initialize: function(options){
-      var templateFile = options.isEditable ? $('#edit-object').html() : $('#view-object').html()
+      this.el = '#' + this.id
       this.id = options.id
-      this.template = _.template(templateFile)
-      this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'change', function(){
+        this.$el.replaceWith(this.render())
+      });
     },
     render: function(){
-      return this.template({item: this.model, id: this.id});
+      var templateFile = this.model.get('isEditable') ? $('#edit-object').html() : $('#view-object').html()
+      this.template = _.template(templateFile)
+      this.$el.html(this.template({item: this.model, id: this.id}))
+      return this.$el
+    },
+    goToEdit: function(){
+        this.model.set('isEditable', true)
     }
 });
 
@@ -49,7 +56,8 @@ var ItemView = Backbone.View.extend({
                 var template = _.template($('#all-items').html());
                 that.$el.html(template());
                 _.each(collection.models, function(item, id, items){
-                    var childObject = new ObjectView({model: item, id: id, isEditable: false})
+                    item.isEditable = false
+                    var childObject = new ObjectView({model: item, id: id})
                     that.$el.find('tbody').append(childObject.render())
                 });
             }

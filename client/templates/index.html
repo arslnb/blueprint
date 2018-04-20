@@ -38,25 +38,21 @@
         </table>
     </script>
     <script type="text/template" id="view-object">
-        <tr>
             <th><%= htmlEncode(item.get('name')) %></th>
             <td><%= htmlEncode(item.get('color')) %></td>
             <td><%= htmlEncode(item.get('age')) %></td>
             <td><%= _.keys(item.get('properties')).length %></td>
             <td><button class="btn btn-info edit-row" id="<%= id %>">Edit</button></td>
-        </tr>
     </script>
     <script type="text/template" id="edit-object">
-        <tr>
             <th><%= htmlEncode(item.get('name')) %></th>
             <td><%= htmlEncode(item.get('color')) %></td>
             <td><%= htmlEncode(item.get('age')) %></td>
             <td><%= _.keys(item.get('properties')).length %></td>
             <td>
-                <button class="btn btn-info save-row" id="<%= index %>">Save</button>
-                <button class="btn btn-danger del-row" id="<%= index %>">Delete</button>
+                <button class="btn btn-info save-row" id="<%= id %>">Save</button>
+                <button class="btn btn-danger del-row" id="<%= id %>">Delete</button>
             </td>
-        </tr>
     </script>
     <script src="{{url_for('client.static', filename='js/script.js')}}"></script>
 </body>
