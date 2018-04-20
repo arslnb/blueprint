@@ -1,8 +1,8 @@
 mockCollection = [
     {
-        'Name': 'Object One',
+        'name': 'Object One',
         'color': 'Red',
-        'Age': 32,
+        'age': 32,
         'properties': {
             'a': 1,
             'b': 2,
@@ -10,9 +10,9 @@ mockCollection = [
         }
     },
     {
-        'Name': 'Object Two',
+        'name': 'Object Two',
         'color': 'Black',
-        'Age': 21,
+        'age': 21,
         'properties': {
             'x': 1,
             'y': 2,
@@ -20,9 +20,9 @@ mockCollection = [
         }
     },
     {
-        'Name': 'Object Three',
+        'name': 'Object Three',
         'color': 'Blue',
-        'Age': 38,
+        'age': 38,
         'properties': {
             '4': 1,
             '5': 2,
@@ -30,9 +30,9 @@ mockCollection = [
         }
     },
     {
-        'Name': 'Object Four',
+        'name': 'Object Four',
         'color': 'Green',
-        'Age': 11,
+        'age': 11,
         'properties': {
             'p': 1,
             'q': 2,
@@ -40,9 +40,9 @@ mockCollection = [
         }
     },
     {
-        'Name': 'Object Five',
+        'name': 'Object Five',
         'color': 'Orange',
-        'Age': 9,
+        'age': 9,
         'properties': {
             '1': 1,
             '2': 2,

@@ -3,6 +3,7 @@ from flask import render_template
 from flask import Blueprint
 from flask import url_for
 from flask import jsonify
+from flask import request
 from mock import mockCollection
 
 app = Flask(__name__)
@@ -22,10 +23,15 @@ app.register_blueprint(client)
 def collections():
     return jsonify(mockCollection)
 
-@app.route('/model', methods=["GET"])
-@app.route('/model/<id>', methods=["GET", "POST"])
-def models(id):
-    return "model"
+@app.route('/model', methods=["POST"])
+@app.route('/model/<modelId>', methods=["GET", "PUT", "DELETE"])
+def models(modelId = None):
+    if request.method == "POST":
+        return "new model write"
+    elif request.method == "GET":
+        return jsonify(mockCollection[int(modelId)])
+    else:
+        return "Write operation to existing"
 
 if __name__ == "__main__":
     app.run(debug = True)
