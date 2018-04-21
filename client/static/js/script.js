@@ -4,6 +4,22 @@ function htmlEncode(value){
     return $('<div/>').text(value).html();
 }
 
+$.fn.serializeObject = function(a) {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+  };
+
 // Models and collections
 
 var Items = Backbone.Collection.extend({
@@ -21,13 +37,14 @@ var Item = Backbone.Model.extend({
 
 var ObjectView = Backbone.View.extend({
     tagName: 'tr',
+    className: 'row-object',
     events: {
         'click .edit-row': 'goToEdit',
         'click .del-row': 'delRow',
-        'click .save-row': 'saveRow'
+        'click .save-obj': 'saveObj'
     },
     initialize: function(options){
-      this.el = '#' + this.id
+      this.el = '#' + String(this.id)
       this.id = options.id
       this.listenTo(this.model, 'change', function(){
         this.$el.replaceWith(this.render())
@@ -41,6 +58,19 @@ var ObjectView = Backbone.View.extend({
     },
     goToEdit: function(){
         this.model.set('isEditable', true)
+    },
+    saveObj: function(ev){
+        var that = this;
+        var objectJson = $(ev.currentTarget).closest('.row-object').find('input').serializeObject()
+        var newObject = new Item();
+        newObject.save(objectJson,{
+            success: function(data) {
+                var updatedModel = objectJson
+                updatedModel['isEditable'] = false
+                that.model.set(updatedModel)
+            }
+        });
+        return false;
     }
 });
 

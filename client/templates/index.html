@@ -45,14 +45,17 @@
             <td><button class="btn btn-info edit-row" id="<%= id %>">Edit</button></td>
     </script>
     <script type="text/template" id="edit-object">
-            <th><%= htmlEncode(item.get('name')) %></th>
-            <td><%= htmlEncode(item.get('color')) %></td>
-            <td><%= htmlEncode(item.get('age')) %></td>
+        <form class="update-form">
+            <th><input type="text" name="name" class="form-control" value="<%= htmlEncode(item.get('name')) %>"></th>
+            <td><input type="text" name="color" class="form-control" value="<%= htmlEncode(item.get('color')) %>"></td>
+            <td><input type="text" name="age" class="form-control" value="<%= htmlEncode(item.get('age')) %>"></td>
             <td><%= _.keys(item.get('properties')).length %></td>
             <td>
-                <button class="btn btn-info save-row" id="<%= id %>">Save</button>
+                <input type="hidden" name="id" value="<%= id %>">
+                <button type="submit" class="btn btn-info save-obj" id="<%= id %>">Save</button>
                 <button class="btn btn-danger del-row" id="<%= id %>">Delete</button>
             </td>
+        </form>
     </script>
     <script src="{{url_for('client.static', filename='js/script.js')}}"></script>
 </body>

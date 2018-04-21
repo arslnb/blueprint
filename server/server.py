@@ -31,7 +31,7 @@ def models(modelId = None):
     elif request.method == "GET":
         return jsonify(mockCollection[int(modelId)])
     else:
-        return "Write operation to existing"
+        return jsonify(request.get_json(force=True))
 
 if __name__ == "__main__":
     app.run(debug = True)
