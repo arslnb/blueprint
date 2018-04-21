@@ -40,7 +40,7 @@ var ObjectView = Backbone.View.extend({
     className: 'row-object',
     events: {
         'click .edit-row': 'goToEdit',
-        'click .del-row': 'delRow',
+        'click .del-obj': 'delObj',
         'click .save-obj': 'saveObj'
     },
     initialize: function(options){
@@ -71,6 +71,15 @@ var ObjectView = Backbone.View.extend({
             }
         });
         return false;
+    },
+    delObj: function(ev){
+        var that = this;
+        var currentObj = new Item({id: this.id});
+        currentObj.destroy({
+            success: function(){
+                that.$el.remove()
+            }
+        })
     }
 });
 

@@ -30,8 +30,10 @@ def models(modelId = None):
         return "new model write"
     elif request.method == "GET":
         return jsonify(mockCollection[int(modelId)])
-    else:
+    elif request.method == "PUT":
         return jsonify(request.get_json(force=True))
+    else:
+        return jsonify({'deleted': True})
 
 if __name__ == "__main__":
     app.run(debug = True)
